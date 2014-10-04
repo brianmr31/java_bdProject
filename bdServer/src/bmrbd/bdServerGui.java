@@ -1,26 +1,56 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/*
- * bdServerGui.java
- *
- * Created on Oct 2, 2014, 10:07:23 PM
- */
 package bmrbd;
 
-/**
- *
- * @author root
- */
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class bdServerGui extends javax.swing.JFrame {
-    SProcess Pro  ;
     /** Creates new form bdServerGui */
     public bdServerGui() {
         initComponents();
-        this.Pro = new SProcess();
-        this.Pro.SetUp();
+        Pro = new SProcess();
+        Pro.SetUp();
+        p = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                while(true){
+                    try {
+                       Thread.sleep(5000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(bdServerGui.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    System.out.println(nilai);
+                    if(Pro.in != null  ){
+                        System.out.println("=> Pesan diterima ");
+                        Pro.recvCmd();
+                        int a = Integer.parseInt(Pro.Pesan);
+                        if(a == 0){
+                            Pro.recvCmd();
+                            Area.append("[ Pesannya ]"+Pro.Pesan+"\n");
+                            LogArea.append("[ Pesannya ]"+Pro.Pesan+"\n");
+                        }else if(a == 1){
+                            Pro.recvCmd();
+                            Pro.execCMD();
+                            Pro.processOutputCmd();
+                            //Pro.sendCmdOut();
+                            Area.append("[ Commandnya ]"+Pro.cmdOut+"\n");
+                            LogArea.append("[ Commandnya ]"+Pro.cmdOut+"\n");
+                            Pro.showCmd();
+                        }else if(a == 2){
+                            Pro.recvCmd();
+                            Pro.recvBigFile(Pro.Pesan);
+                            Area.append("[ Transfernya ]"+Pro.Pesan+"\n");
+                            LogArea.append("[ Transfernya ]"+Pro.Pesan+"\n");
+                        }
+                        
+                    }
+                }
+            }
+        });
+        
+        p.setDaemon(true);
+        p.start();
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -58,7 +88,7 @@ public class bdServerGui extends javax.swing.JFrame {
 
         jPanel1.setLayout(new java.awt.GridLayout(0, 1));
 
-        jPanel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(-16777216,true), 1, true));
+        jPanel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -137,9 +167,14 @@ public class bdServerGui extends javax.swing.JFrame {
 
         jPanel2.add(jPanel6, java.awt.BorderLayout.PAGE_START);
 
-        Area.setColumns(20);
         Area.setEditable(false);
+        Area.setColumns(20);
         Area.setRows(5);
+        Area.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                AreaMouseMoved(evt);
+            }
+        });
         jScrollPane1.setViewportView(Area);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -152,14 +187,14 @@ public class bdServerGui extends javax.swing.JFrame {
 
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        LogArea.setColumns(20);
         LogArea.setEditable(false);
+        LogArea.setColumns(20);
         LogArea.setRows(5);
         jScrollPane2.setViewportView(LogArea);
 
         jPanel3.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(-16777216,true), 1, true));
+        jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jPanel7.setLayout(new java.awt.GridLayout(2, 1));
 
         save.setText("Save");
@@ -184,11 +219,12 @@ public class bdServerGui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-   if(this.Pro.isAlive() == false){
+   if(Pro.isAlive() == false){
         int port = Integer.parseInt(Gport.getText());
-        this.Pro.setPort(port);
-        this.Pro.Process();
-        this.Pro.start();
+        Pro.setPort(port);
+        Pro.Process();
+        Pro.start();
+        nilai = true ;
         status.setText("Wait Client");
    }
 }//GEN-LAST:event_jButton1ActionPerformed
@@ -198,20 +234,20 @@ private void GportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
 }//GEN-LAST:event_GportActionPerformed
 
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    if(this.Pro.Sc != null || this.Pro.SServer != null ){
+    if(Pro.Sc != null || Pro.SServer != null ){
         //System.out.println("akan Ditutup");
-        this.Pro.closeServer();
+        Pro.closeServer();
         //this.Pro.stop();
         status.setText(" Stop , already to connect");
-        this.Pro.SServer = null ;
-        this.Pro.Sc = null ;
+        Pro.SServer = null ;
+        Pro.Sc = null ;
     }
 }//GEN-LAST:event_jButton2ActionPerformed
 
 private void jTabbedPane1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseMoved
-    if(this.Pro.Sc != null){
+    if(Pro.Sc != null){
             status.setText("Connected");
-            this.Pro.stop();
+            Pro.stop();
         }
 }//GEN-LAST:event_jTabbedPane1MouseMoved
 
@@ -220,26 +256,25 @@ private void CboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:ev
 }//GEN-LAST:event_CboxActionPerformed
 
 private void sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendActionPerformed
+    
     int sel = Cbox.getSelectedIndex();
     String S= command.getText();
     if(command.getText().equals("")||command.getText().equals(" ")||command.getText().equals("   ")){
         status1.setText("Input Null");
     }else{
         if(sel == 0 ){
-            this.Pro.setCmd(S);
-            this.Pro.sendCmd();
+            Pro.setCmd(S);
+            Pro.sendCmd();
             Area.append("[ Pesan ]"+S+"\n");
             LogArea.append("[ Pesan ]"+S+"\n");
             status1.setText("sukses");
         }else{
-            this.Pro.setCmd(S);
-            this.Pro.sendCmd();
+            Pro.setCmd(S);
+            Pro.sendCmd();
             Area.append("[ Transfer ]"+S+"\n");
             LogArea.append("[ Transfer ]"+S+"\n");
             status1.setText("sukses");
         }
-        
-        
     }
     
 }//GEN-LAST:event_sendActionPerformed
@@ -251,6 +286,12 @@ private void commandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
 private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
     save.setText("sukses");
 }//GEN-LAST:event_saveActionPerformed
+
+    private void AreaMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AreaMouseMoved
+        //Pro.recvCmd();
+        //Area.append("[ Transfer ]"+Pro.Pesan+"\n");
+        //LogArea.append("[ Transfer ]"+Pro.Pesan+"\n");
+    }//GEN-LAST:event_AreaMouseMoved
 
     /**
      * @param args the command line arguments
@@ -284,9 +325,14 @@ private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:ev
 
             public void run() {
                 new bdServerGui().setVisible(true);
+                
             }
         });
+        
     }
+    private final SProcess Pro  ;
+    private Thread p ;
+    private Boolean nilai = false ;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Area;
     private javax.swing.JComboBox Cbox;

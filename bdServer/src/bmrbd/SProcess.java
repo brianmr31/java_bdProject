@@ -160,10 +160,29 @@ public class SProcess extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(SProcess.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         p.destroy();
     }
     public void showCmd(){
-        System.out.println(this.cmdOut);
+        //System.out.println(this.cmdOut);
+        this.cmdOut = "" ;
+    }
+    public void sendCmdOut(){
+        System.out.println("Pesan : "+this.cmdOut);
+        this.crypto.setPlainByte(this.Con.conString2Byte(this.cmdOut));
+        this.Con.conBytetoString(this.crypto.setEncrypt());
+        this.PesanC = this.crypto.getcipherText();
+        System.out.println("PesanC : "+this.PesanC);
+        System.out.println("P ; "+this.crypto.getPlainText());
+        System.out.println("C ; "+this.crypto.getcipherText().length);
+        try {
+            this.out.write(this.PesanC.length);
+            this.out.flush();
+            this.out.write(this.PesanC, 0, this.PesanC.length);
+            this.out.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(SProcess.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void sendCmd(){
         System.out.println("Pesan : "+this.Pesan);
@@ -173,6 +192,7 @@ public class SProcess extends Thread {
         System.out.println("PesanC : "+this.PesanC);
         System.out.println("P ; "+this.crypto.getPlainText());
         System.out.println("C ; "+this.crypto.getcipherText().length);
+        
         try {
             this.out.write(this.PesanC.length);
             this.out.flush();
@@ -341,9 +361,9 @@ public class SProcess extends Thread {
                 //execCMD();
                 //processOutputCmd();
                 //showCmd();
-                System.out.println("===============================================");
+                //System.out.println("===============================================");
                 //recvFile("bbb.txt");
-                recvBigFile("b.jpg");
+                //recvBigFile("b.jpg");
             //} catch (IOException ex) {
                 //try {
                 //    Sc.close();

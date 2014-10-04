@@ -75,6 +75,7 @@ public class SProcess extends Thread {
         this.Con = new ConV();
         this.crypto = new Crypto();
         this.crypto.setUp();
+        this.crypto.setSig();
     }
     public void setCmd(String p){
         this.Pesan = p;
@@ -305,6 +306,7 @@ public class SProcess extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(SProcess.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         recvPublicKey();
         this.SetUp();
         this.crypto.generatorPublicKey(this.publickey);
@@ -325,8 +327,8 @@ public class SProcess extends Thread {
             System.out.println("===============================================");
             //setCmd("ls");
             //sendCmd();
-            setCmd("a.jpg");
-            sendBigFile();
+            //setCmd("a.jpg");
+            //sendBigFile();
        //}
     }
 }

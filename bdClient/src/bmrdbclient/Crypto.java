@@ -59,8 +59,8 @@ public class Crypto {
         this.keyPair = keyGen.genKeyPair();
         // pada Client hanya digunakan untuk encripsi data
         // menggunakan public key dari server
-        //this.privateKey = keyPair.getPrivate();
-        //this.publicKey  = keyPair.getPublic();
+        this.privateKey = keyPair.getPrivate();
+        this.publicKey  = keyPair.getPublic();
     }
     public void generatorPrivatekey(byte[] a){
         try {
@@ -156,7 +156,7 @@ public class Crypto {
         return this.EncrpytText ;
     }
     public byte[] setDecrpyt(){
-        System.out.println("Start Decrpyt RSA ... ");
+        //System.out.println("Start Decrpyt RSA ... ");
         try {
             this.cipher.init(Cipher.DECRYPT_MODE, this.privateKey);
         } catch (InvalidKeyException ex) {
@@ -169,7 +169,7 @@ public class Crypto {
         } catch (BadPaddingException ex) {
             Logger.getLogger(Crypto.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("Finish Decrpyt RSA ... ");
+        //System.out.println("Finish Decrpyt RSA ... ");
         return this.cipherText ;
     }
     public String getDecrpyt(){
