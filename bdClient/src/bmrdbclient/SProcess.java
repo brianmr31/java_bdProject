@@ -50,6 +50,10 @@ public class SProcess extends Thread {
     protected FileOutputStream FOSP = null ;
     protected FileInputStream FIS = null ;
     protected FileInputStream FISP = null ;
+    //============================================
+    // Sukses konek
+    protected Boolean running = false ;
+    protected int i = 0; 
     public void Process(String host,int port){
         this.port = port;
         this.host = host;
@@ -201,6 +205,78 @@ public class SProcess extends Thread {
         System.out.println("longwrite : "+this.Con.getLengthF2B());
         System.out.println("===================================================");
     }
+    public void recvBigFile(String f){
+        int FlMod = 0 ;
+        int LLength = 0 ;
+        String Length = null ;
+        byte[] Lebar = null ;
+        DataInputStream test = null;
+        try {
+            LLength = this.in.read();
+            Lebar = new byte[LLength];
+            this.in.read(Lebar);
+            FlMod = this.in.read();
+        } catch (IOException ex) {
+            Logger.getLogger(SProcess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.Con.conBytetoString(Lebar);
+        Length = this.Con.getBytetoString();
+        Long Fl = Long.parseLong(Length)/100;
+        Long FlM = Fl % 100;
+        //tmp = new byte[];
+        tmp = new byte[100];
+        //System.out.println(" Bfl "+LLength+" Length : "+Fl+" Sisa : "+FlMod+" : "+(int)Long.parseLong(Length));
+        String nilai ;
+        try {
+            FOS = new FileOutputStream(f);
+        } catch (FileNotFoundException ex) {
+            System.out.println("");
+            Logger.getLogger(SProcess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for(i=0;i<=/*1*/Fl;i++){       
+            try {
+                test = new DataInputStream(client.getInputStream());
+            } catch (IOException ex) {
+                Logger.getLogger(SProcess.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(i==Fl){
+                try {
+                    int a = test.read();
+                    b = new byte[a];
+                    test.read(b,0,a); // Membaca ditempatkan di tmp buffer (byte)
+                    FOS.write(b); // Menulis dalam tmp 
+                    FOS.flush();
+                 } catch (IOException ex) {
+                        System.out.println(" ==> ---------------  File Tidak ditemukan Path"+i);
+                 }
+            }else{
+                try {
+                    int a = test.read();
+                    b = new byte[a];
+                    System.out.println(" i "+i+" a : "+a);
+                    test.read(b,0,a); // Membaca ditempatkan di tmp buffer (byte)
+                    this.crypto.setcipherText(b);
+                    b = this.crypto.setDecrpyt();
+                    FOS.write(b); // Menulis dalam tmp 
+                    FOS.flush();
+                 } catch (IOException ex) {
+                        System.out.println(" ==> ---------------  File Tidak ditemukan Path"+i);
+                 }
+            }
+       }
+        //System.out.println("....Flush......");
+        try {
+            FOS.flush(); // Memasukan ke file 
+        } catch (IOException ex) {
+            System.out.println(" ==> ---------------  File Tidak ditemukan Path"+i);
+        }
+        //System.out.println("....Selesai..... ");
+        try {
+            FOS.close();
+        } catch (IOException ex) {
+            System.out.println(" ==> ---------------  File Tidak ditemukan Path"+i);
+        }   
+    }
     public void sendBigFile(){
         //File F = new File(this.Pesan);
         int z = 0 ;
@@ -306,10 +382,12 @@ public class SProcess extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(SProcess.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        recvPublicKey();
         this.SetUp();
+        recvPublicKey();
         this.crypto.generatorPublicKey(this.publickey);
+        //================================ baru ditambahkan ==================
+        sendPublicKey();
+        running = true ;
         //System.out.println(this.crypto.getPublicKeyByte());
         //recvCmd();
         //try {
@@ -324,7 +402,7 @@ public class SProcess extends Thread {
             //String pesan = PesanS.nextLine();
             //setCmd(pesan);
             //sendCmd();
-            System.out.println("===============================================");
+            //System.out.println("===============================================");
             //setCmd("ls");
             //sendCmd();
             //setCmd("a.jpg");

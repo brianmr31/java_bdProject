@@ -54,6 +54,7 @@ public class SProcess extends Thread {
     protected int i ;
     protected int z ;
     // ============= Server Open Socket ========================================
+    protected Boolean running = false ;
     public void Process(){
         try{
             this.SServer = new ServerSocket(this.port);
@@ -323,6 +324,60 @@ public class SProcess extends Thread {
             System.out.println(" ==> ---------------  File Tidak ditemukan Path"+i);
         }   
     }
+    public void sendBigFile(){
+        //File F = new File(this.Pesan);
+        int z = 0 ;
+        int i = 0 ;
+        try {
+            F = new File(this.Pesan);
+            long Fl  = F.length() / 100; // Jumlah file yang menjadi jumlah tmp
+            int FlMod  = (int) (F.length() % 100); // Sisa dari pembagain lebar Fl
+            String SFl = Long.toString(F.length()); // 
+            byte[] BFl = SFl.getBytes();
+            FIS = new FileInputStream(F);
+            a  = new byte[(int) F.length()];
+            FIS = new FileInputStream(F);
+            tmp = new byte[Integer.parseInt(SFl)*100+FlMod];
+            System.out.println("Nilai Length : "+SFl+" Nilai length Fl : "+Fl+" Nilai Mod Fl : "+FlMod+" BFl : "+BFl.length);
+            try {
+                this.out.write(BFl.length);
+                this.out.flush();
+                this.out.write(BFl);
+                this.out.flush();
+                this.out.write(FlMod);
+                this.out.flush();
+            } catch (IOException ex) {
+                Logger.getLogger(SProcess.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            for(i=0;i<=Fl;i++){
+                if(i == Fl){
+                    try { 
+                        b = new byte[FlMod] ; // Membuat Ukuran byte yg constant
+                        FIS.read(b, 0, FlMod);
+                        this.out.write(FlMod);
+                        this.out.flush();
+                        this.out.write(b);
+                        this.out.flush();
+                    } catch (IOException ex) {
+                        System.out.println("Fl : "+Fl+" z : "+z+" i : "+i);
+                    }
+                }else{
+                    try {
+                        b = new byte[100] ; // Membuat Ukuran byte yg constant
+                        FIS.read(b, 0, 100); 
+                        this.crypto.setPlainByte(b);
+                        b = this.crypto.setEncrypt();
+                        this.out.write(b.length);
+                        this.out.flush();
+                        this.out.write(b,0,b.length);
+                        this.out.flush();
+                    } catch (IOException ex) {
+                        System.out.println("Fl : "+Fl+" z : "+z+" i : "+i);
+                    }
+                }
+            }
+        } catch (FileNotFoundException ex) {  }
+    }
     @Override
     public void run(){
         System.out.println("Connect On Port : "+
@@ -339,7 +394,12 @@ public class SProcess extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(SProcess.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.SetUp();
         sendPublicKey();
+        //================================ baru ditambahkan ==================
+        recvPublicKey();
+        this.crypto.generatorPublicKey(this.publickey);
+        running = true ;
         //setCmd("ls -l");
         //sendCmd();
         //try {

@@ -19,10 +19,21 @@ public class bdClientGui extends javax.swing.JFrame {
                         Logger.getLogger(bdClientGui.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     System.out.println("=====");
-                    if(Pro.client != null ){
-                        System.out.println("Tunggu pesan");
+                    if(Pro.running != false ){
+                        System.out.println("=> Pesan diterima ");
                         Pro.recvCmd();
-                        Area.append(Pro.Pesan);
+                        int a = Integer.parseInt(Pro.Pesan);
+                        if(a == 0){
+                            Pro.recvCmd();
+                            Area.append("[ Pesan      ] "+Pro.Pesan+"\n");
+                        }else if(a == 1 ){
+                            Pro.recvCmd();
+                            Pro.recvBigFile(Pro.Pesan);
+                            Area.append("[ Transfernya ] "+Pro.Pesan+"\n");
+                            
+                            
+                        }
+                        
                     }
                 }
             }

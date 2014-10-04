@@ -19,8 +19,8 @@ public class bdServerGui extends javax.swing.JFrame {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(bdServerGui.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    System.out.println(nilai);
-                    if(Pro.in != null  ){
+                    System.out.println(Pro.running);
+                    if(Pro.running != false){
                         System.out.println("=> Pesan diterima ");
                         Pro.recvCmd();
                         int a = Integer.parseInt(Pro.Pesan);
@@ -258,6 +258,8 @@ private void CboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:ev
 private void sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendActionPerformed
     
     int sel = Cbox.getSelectedIndex();
+    this.Pro.setCmd(String.valueOf(sel));
+    this.Pro.sendCmd();
     String S= command.getText();
     if(command.getText().equals("")||command.getText().equals(" ")||command.getText().equals("   ")){
         status1.setText("Input Null");
@@ -268,9 +270,10 @@ private void sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:ev
             Area.append("[ Pesan ]"+S+"\n");
             LogArea.append("[ Pesan ]"+S+"\n");
             status1.setText("sukses");
-        }else{
+        }else if(sel == 1){
             Pro.setCmd(S);
             Pro.sendCmd();
+            Pro.sendBigFile();
             Area.append("[ Transfer ]"+S+"\n");
             LogArea.append("[ Transfer ]"+S+"\n");
             status1.setText("sukses");

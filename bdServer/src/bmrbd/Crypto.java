@@ -127,9 +127,9 @@ public class Crypto {
         
     }
     public byte[] setEncrypt(){
-        System.out.println("Start Encrypt RSA ... ");
+        //System.out.println("Start Encrypt RSA ... ");
         try {
-            this.cipher.init(Cipher.ENCRYPT_MODE, this.publicKey);
+            this.cipher.init(Cipher.ENCRYPT_MODE, this.publicKeyC);
         } catch (InvalidKeyException ex) {
             Logger.getLogger(Crypto.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -140,7 +140,7 @@ public class Crypto {
         } catch (BadPaddingException ex) {
             Logger.getLogger(Crypto.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("Finish Encrypt RSA ... ");
+        //System.out.println("Finish Encrypt RSA ... ");
         return this.cipherText ;
     }
     public String getEncrypt(){
