@@ -14,7 +14,7 @@ public class bdClientGui extends javax.swing.JFrame {
             public void run() {
                 while(true){
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(1000);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(bdClientGui.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -29,9 +29,10 @@ public class bdClientGui extends javax.swing.JFrame {
                         }else if(a == 1 ){
                             Pro.recvCmd();
                             Pro.recvBigFile(Pro.Pesan);
-                            Area.append("[ Transfernya ] "+Pro.Pesan+"\n");
-                            
-                            
+                            Area.append("[ Transfernya ] "+Pro.Pesan+"\n");   
+                        }else if(a == 9){
+                            Pro.recvCmd();
+                            Area.append("[ Command tadi] "+Pro.Pesan+"\n");   
                         }
                         
                     }

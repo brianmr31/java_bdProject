@@ -15,7 +15,7 @@ public class bdServerGui extends javax.swing.JFrame {
             public void run() {
                 while(true){
                     try {
-                       Thread.sleep(5000);
+                       Thread.sleep(1000);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(bdServerGui.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -32,7 +32,9 @@ public class bdServerGui extends javax.swing.JFrame {
                             Pro.recvCmd();
                             Pro.execCMD();
                             Pro.processOutputCmd();
-                            //Pro.sendCmdOut();
+                            Pro.setCmd("9");
+                            Pro.sendCmd();
+                            Pro.sendCmdOut();
                             Area.append("[ Commandnya ]"+Pro.cmdOut+"\n");
                             LogArea.append("[ Commandnya ]"+Pro.cmdOut+"\n");
                             Pro.showCmd();
