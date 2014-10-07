@@ -30,8 +30,12 @@ Cara Kerja Program ini : <p>
     <p> 5. Cryoto.java   : berfungsi sebagai libaray yang mengenkripsi dan dekripsi byte. Di bd Project menggunakan algoritma  Rsa <p>
 </p>
 <p> Contoh cara kerja Transfer File dari server ke client </p> 
-<p> 1 file input A ___________________________________________________________ 9. file input A </p>
-<p> 2 membagi ukuran file menjadi 100 byte&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 8. penggabungan file-file yang telah dipecah </p> 
-<p> 3 enkripsi Rsa (public key client)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp7. dekripsi ( private key server ) </p> 
-<p> 4 bd project membuka socket (server)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp6. bd project membuka socket client </p> 
-<p> 5 ------------------------------------- lewat jaringan (wlan / eth / ppp )---------------------------------------------- </p>
+<p> 1. file input A  </p> 
+<p> 2. membagi ukuran file menjadi 100 byte </p> 
+<p> 3. enkripsi Rsa (public key client) </p> 
+<p> 4. bd project membuka socket (server)</p> 
+<p> 5. lewat jaringan (wlan / eth / ppp ) </p>
+<p> 6. bd project membuka socket client </p> 
+<p> 7. dekripsi ( private key server ) </p> 
+<p> 8. penggabungan file-file yang telah dipecah </p> 
+<p> 9. file input A </p>
