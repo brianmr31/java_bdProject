@@ -1,3 +1,27 @@
 <h1> Project Bd </h1>
 
-<p> Project pembelajaran pembuatan simple backdoor yang dibuat dari java. Program ini dilengkapi dengan enkripsi data dan dapat mengirim suatu bentuk file namun harus berukuran kecil (dicoba 8byte :v wwkwkkk). Terdapat 4 buah class, class SProsess agar bisa melayani client secara bersamaan, class Crypto untuk encripsi data ( RSA ), class ConV untuk melakukan perubahan dari String ke byte, file ke byte, atau sebaliknya, class main. Silahkan dipelajari dan dikembangkan hehee (y) </p>
+Pada suatu jaringan yang ekslusif, dimana terapat komunikasi dengan traffic data yang bersifat restic maka dibutuhkan sebuah prosedur pengamanan baik secara pengiriman data dan kerahasianya, bd Project memiliki kemapuan untuk melakukan perlindungan tersebut  terhadap ancaman-ancaman komunikasi di dalam suatu jaringan atau server enkripsi data
+
+Untuk menyediakan teknologi komunikasi internal seperti :
+
+1. Transfer file 
+2. command shell / remote command
+3. encrypted chat 
+4. komunikasi antara node-to-node
+
+Cara Mengunakan :
+  1. Pc sebagai Server
+        Compile code java bdServer, setelah dicompile akan keluar sebuah form isikan port ( Terserah tapi usahakan diatas 1000 ) karena port 1-1000 adalah port yang telah mempunyai service standard
+  2. Pc sebagai Client 
+        Compile code java bdClient, setelah dicompile akan keluar sebuah form, isikan host ( alamat ip server ) dan port ( sama dengan port listen di server )
+  setelah porses tersebut selesai anda bisa tab main, dan memilih ( Memilih dicomboxnya ) data mana yang mau dikirim. proses komunikasi 2 arah
+
+Cara Kerja Program ini :
+  ada 5 buah class yaitu 
+    1. BMRdb???.java : berfungsi sebagai main program yang menjalankan Gui (class bd???Gui.java ). 
+        BMRbdServer.java -> di app server
+        BMRbdClient.java -> di app Client
+    2. bd???Gui.java : berfungsi sebagai alat interaksi user yang akan mengeksekusi program ( class SProcess.java )
+        bdServerGui.java -> di app server
+        bdClientGui.java -> di app Client
+    3. SProcess.java : berfungsi sebagai libaray pokok yang digunkan untuk mengatur komunikasi data. Contoh menerima bagaimana byte data itu Di ( terima, kirim, eksekusi, enkripsi, dekripsi, olah ). Agar komunikasi berjalan 2 arah dibuat di Thread ( process kecil dari process induknya ). 
