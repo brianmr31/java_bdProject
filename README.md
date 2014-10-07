@@ -11,10 +11,10 @@ Untuk menyediakan teknologi komunikasi internal seperti :
 
 Cara Mengunakan :
   1. Pc sebagai Server
-        <p> Compile code java bdServer, setelah dicompile akan keluar sebuah form isikan port ( Terserah tapi usahakan diatas 1000 ) karena port 1-1000 adalah port yang telah mempunyai service standard </p> 
+        <p> Compile code java bdServer, setelah dicompile akan keluar sebuah form isikan port ( Terserah tapi usahakan diatas 1000 ) karena port 1-1000 adalah port yang telah mempunyai service standard, Setelah itu klik start </p> 
   2. Pc sebagai Client 
-        <p> Compile code java bdClient, setelah dicompile akan keluar sebuah form, isikan host ( alamat ip server ) dan port ( sama dengan port listen di server )
-  setelah porses tersebut selesai anda bisa tab main, dan memilih ( Memilih dicomboxnya ) data mana yang mau dikirim. proses komunikasi 2 arah </p> 
+        <p> Compile code java bdClient, setelah dicompile akan keluar sebuah form, isikan host ( alamat ip server ) dan port ( sama dengan port listen di server ) setelah itu klik connect </p> 
+  <p> setelah porses tersebut selesai anda bisa tab main, dan memilih ( Memilih dicomboxnya ) data mana yang mau dikirim. proses komunikasi 2 arah</p> 
 
 Cara Kerja Program ini :
   ada 5 buah class yaitu :
