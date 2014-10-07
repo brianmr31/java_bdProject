@@ -24,4 +24,6 @@ Cara Kerja Program ini :
     2. bd???Gui.java : berfungsi sebagai alat interaksi user yang akan mengeksekusi program ( class SProcess.java )
         bdServerGui.java -> di app server
         bdClientGui.java -> di app Client
-    3. SProcess.java : berfungsi sebagai libaray pokok yang digunkan untuk mengatur komunikasi data. Contoh menerima bagaimana byte data itu Di ( terima, kirim, eksekusi, enkripsi, dekripsi, olah ). Agar komunikasi berjalan 2 arah dibuat di Thread ( process kecil dari process induknya ). 
+    3. SProcess.java : berfungsi sebagai libaray pokok yang digunkan untuk mengatur komunikasi data. Contoh menerima bagaimana byte data itu Di ( terima, kirim, eksekusi, enkripsi, dekripsi, olah ). bagaimana bisa komunikasi berjalan 2 arah dengan dibuat di Thread ( process kecil dari process induknya ). bagaimana bisa mengolah Input / Output baik itu di network atau read write file lognya. sebagian proses di class ini dibantu oleh class ConV.java dan Crypto.java untuk melakukan 
+    4. ConV.java     : berfungsi sebagai libaray yang mengconversi data ( File, String, Integer ) ke Byte 
+    5. Cryoto.java   : berfungsi sebagai libaray yang mengenkripsi dan dekripsi byte. Di bd Project menggunakan algoritma Rsa
