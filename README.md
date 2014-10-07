@@ -16,15 +16,16 @@ Cara Mengunakan :
         <p> Compile code java bdClient, setelah dicompile akan keluar sebuah form, isikan host ( alamat ip server ) dan port ( sama dengan port listen di server ) setelah itu klik connect </p> 
   <p> setelah porses tersebut selesai anda bisa tab main, dan memilih ( Memilih dicomboxnya ) data mana yang mau dikirim. proses komunikasi 2 arah</p> 
 
-Cara Kerja Program ini :
-  ada 5 buah class yaitu :
-    1. BMRdb???.java : berfungsi sebagai main program yang menjalankan Gui (class bd???Gui.java ). 
-        BMRbdServer.java -> di app server
-        BMRbdClient.java -> di app Client
-    2. bd???Gui.java : berfungsi sebagai alat interaksi user yang akan mengeksekusi program ( class SProcess.java )
-        bdServerGui.java -> di app server
-        bdClientGui.java -> di app Client
-    3. SProcess.java : berfungsi sebagai libaray pokok yang digunkan untuk mengatur komunikasi data. 
+Cara Kerja Program ini : <p> 
+  <p> ada 5 buah class yaitu : </p> 
+    <p> 1. BMRdb???.java : berfungsi sebagai main program yang menjalankan Gui (class bd???Gui.java ).</p> 
+        <p> BMRbdServer.java -> di app server </p>
+        <p> BMRbdClient.java -> di app Client </p>
+    <p> 2. bd???Gui.java : berfungsi sebagai alat interaksi user yang akan mengeksekusi program ( class SProcess.java ) </p> 
+        <p> bdServerGui.java -> di app server </p> 
+        <p> bdClientGui.java -> di app Client </p> 
+    <p> 3. SProcess.java : berfungsi sebagai libaray pokok yang digunkan untuk mengatur komunikasi data. </p> 
     <p> Contoh menerima bagaimana byte data itu Di ( terima, kirim, eksekusi, enkripsi, dekripsi, olah ). bagaimana bisa komunikasi berjalan 2 arah dengan dibuat di Thread ( process kecil dari process induknya ). bagaimana bisa mengolah Input / Output baik itu di network atau read write file lognya. sebagian proses di class ini dibantu oleh class ConV.java dan Crypto.java untuk melakukan </p> 
-    4. ConV.java     : berfungsi sebagai libaray yang mengconversi data ( File, String, Integer ) ke Byte 
-    5. Cryoto.java   : berfungsi sebagai libaray yang mengenkripsi dan dekripsi byte. Di bd Project menggunakan algoritma Rsa
+    <p> 4. ConV.java     : berfungsi sebagai libaray yang mengconversi data ( File, String, Integer ) ke Byte  <p>
+    <p> 5. Cryoto.java   : berfungsi sebagai libaray yang mengenkripsi dan dekripsi byte. Di bd Project menggunakan algoritma  Rsa <p>
+</p>
