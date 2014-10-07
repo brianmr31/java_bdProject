@@ -29,3 +29,9 @@ Cara Kerja Program ini : <p>
     <p> 4. ConV.java     : berfungsi sebagai libaray yang mengconversi data ( File, String, Integer ) ke Byte  <p>
     <p> 5. Cryoto.java   : berfungsi sebagai libaray yang mengenkripsi dan dekripsi byte. Di bd Project menggunakan algoritma  Rsa <p>
 </p>
+Contoh cara kerja Transfer File dari server ke client
+-> file input A                                                     file input A
+-> membagi ukuran file menjadi 100 byte                             penggabungan file-file yang telah dipecah
+-> enkripsi Rsa (public key client)                                 dekripsi ( private key server )
+-> bd project membuka socket (server)                               bd project membuka socket client
+------------------------------------- lewat jaringan (wlan / eth / ppp )----------------------------------------------
